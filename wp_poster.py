@@ -9,7 +9,7 @@ import yaml
 class WP_Poster:
     def __init__(self, login_yml):
         ## -----*----- コンストラクタ -----*----- ##
-        self.wp_login = yaml.load(open(login_yml))
+        self.wp_login = yaml.load(open(login_yml), Loader=yaml.SafeLoader)
 
 
     def post_article(self, title, content, photo=None, post_type=None, post_status='publish'):
