@@ -15,13 +15,6 @@ Post articles to WordPress
 ```python
 from wp_poster import WP_Poster
 
-wp = WP_Poster('yaml file path')
+wp = WP_Poster('url', 'username', 'password')
 wp.post_article('title', 'content', 'image path')
-```
-
-### Yaml Example
-```yaml
-url: https://your site/xmlrpc.php
-username: your username
-password: your password
 ```
