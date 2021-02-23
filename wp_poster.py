@@ -3,21 +3,20 @@ from wordpress_xmlrpc import Client, WordPressPost
 from wordpress_xmlrpc.methods import posts
 from wordpress_xmlrpc.compat import xmlrpc_client
 from wordpress_xmlrpc.methods import media, posts
-import yaml
 
 
 class WP_Poster:
-    def __init__(self, login_yml):
-        ## -----*----- コンストラクタ -----*----- ##
-        self.wp_login = yaml.load(open(login_yml), Loader=yaml.SafeLoader)
-
+    def __init__(self, url, username, password):
+        self.url = url
+        self.username = username
+        self.password = password
 
     def post_article(self, title, content, photo=None, post_type=None, post_status='publish'):
         ## -----*----- 記事を投稿 -----*----- ##
-        client = Client(self.wp_login['url'],
-                        self.wp_login['username'],
-                        self.wp_login['password']
-        )
+        client = Client(self.url,
+                        self.username,
+                        self.password
+                        )
 
         # 画像投稿
         if photo != None:
@@ -36,8 +35,10 @@ class WP_Poster:
         post.title = title
         post.content = content
         post.post_status = post_status
-        if post_type != None: post.post_type = post_type
-        if photo != None: post.thumbnail = attachment_id
+        if post_type != None:
+            post.post_type = post_type
+        if photo != None:
+            post.thumbnail = attachment_id
 
         # 送信
         client.call(posts.NewPost(post))
